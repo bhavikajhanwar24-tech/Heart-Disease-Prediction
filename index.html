@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Heart Disease Prediction</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+        body { font-family: Arial; background: #f4f6f8; }
+        form {
+            width: 420px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        input, select, button {
+            width: 100%;
+            margin: 6px 0;
+            padding: 8px;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+        }
+        h2 { text-align: center; }
+    </style>
+</head>
+
+<body>
+
+<form action="/predict" method="post">
+    <h2>Heart Disease Prediction</h2>
+
+    <input type="number" name="age" placeholder="Age" required>
+
+    <select name="sex">
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+    </select>
+
+    <select name="chest_pain_type">
+        <option value="typical angina">Typical Angina</option>
+        <option value="atypical angina">Atypical Angina</option>
+        <option value="non-anginal pain">Non-anginal Pain</option>
+        <option value="asymptomatic">Asymptomatic</option>
+    </select>
+
+    <input type="number" name="bp" placeholder="Resting BP">
+
+    <input type="number" name="chol" placeholder="Cholesterol">
+
+    <select name="fbs">
+        <option value="lower than 120mg/ml">FBS < 120</option>
+        <option value="greater than 120mg/ml">FBS > 120</option>
+    </select>
+
+    <select name="ecg">
+        <option value="normal">Normal</option>
+        <option value="st-t wave abnormality">ST-T Abnormality</option>
+        <option value="left ventricular hypertrophy">LVH</option>
+    </select>
+
+    <input type="number" name="thalach" placeholder="Max Heart Rate">
+
+    <select name="exang">
+        <option value="no">No Exercise Angina</option>
+        <option value="yes">Exercise Angina</option>
+    </select>
+
+    <input type="number" step="0.1" name="oldpeak" placeholder="ST Depression">
+
+    <select name="st_slope">
+        <option value="upsloping">Upsloping</option>
+        <option value="flat">Flat</option>
+        <option value="downsloping">Downsloping</option>
+    </select>
+
+    <input type="number" name="ca" placeholder="Major Vessels (0–3)">
+
+    <select name="thal">
+        <option value="normal">Normal</option>
+        <option value="fixed defect">Fixed Defect</option>
+        <option value="reversible defect">Reversible Defect</option>
+    </select>
+
+    <button type="submit">Predict</button>
+
+    {% if prediction is defined %}
+      <div class="result">
+        {% if prediction == 1 %}
+            <p class="danger">⚠️ Heart Disease Risk Detected</p>
+        {% else %}
+            <p class="success">✅ No Heart Disease Detected</p>
+        {% endif %}
+        <p>Probability: {{ probability }}</p>
+      </div>
+    {% endif %}
+
+</form>
+
+</body>
+</html>
